@@ -1,0 +1,86 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+template <typename T>
+vector<vector<T>> initializeMatrix(int size, T defaultValue) {
+    return vector<vector<T>>(size, vector<T>(size, defaultValue));
+}
+
+template <typename T>
+void printMatrix(const vector<vector<T>>& matrix) {
+    for (const auto& row : matrix) {
+        for (const auto& element : row) {
+            cout << element << " ";
+        }
+        cout << endl;
+    }
+}
+
+template <typename T>
+pair<T, T> findMinMaxDiagonal(const vector<vector<T>>& matrix) {
+    T minElement = matrix[0][0];
+    T maxElement = matrix[0][0];
+
+    for (size_t i = 1; i < matrix.size(); i++) {
+        if (matrix[i][i] < minElement) {
+            minElement = matrix[i][i];
+        }
+        if (matrix[i][i] > maxElement) {
+            maxElement = matrix[i][i];
+        }
+    }
+    return {minElement, maxElement};
+}
+
+template <typename T>
+void sortRows(vector<vector<T>>& matrix) {
+    for (auto& row : matrix) {
+        sort(row.begin(), row.end());
+    }
+}
+
+int main() {
+    int size = 3;
+    
+    vector<vector<int>> intMatrix = initializeMatrix<int>(size, 0);
+    intMatrix[0] = {3, 1, 2};
+    intMatrix[1] = {9, 5, 7};
+    intMatrix[2] = {6, 8, 4};
+    cout << "Int Матриця:" << endl;
+    printMatrix(intMatrix);
+    auto [intMin, intMax] = findMinMaxDiagonal(intMatrix);
+    cout << "Min на діагоналі: " << intMin << ", Max на діагоналі: " << intMax << endl;
+    sortRows(intMatrix);
+    cout << "Відсортована Int Матриця:" << endl;
+    printMatrix(intMatrix);
+    cout << endl;
+
+    vector<vector<double>> doubleMatrix = initializeMatrix<double>(size, 0.0);
+    doubleMatrix[0] = {3.1, 1.5, 2.7};
+    doubleMatrix[1] = {9.2, 5.3, 7.6};
+    doubleMatrix[2] = {6.4, 8.8, 4.9};
+    cout << "Double Матриця:" << endl;
+    printMatrix(doubleMatrix);
+    auto [doubleMin, doubleMax] = findMinMaxDiagonal(doubleMatrix);
+    cout << "Min на діагоналі: " << doubleMin << ", Max на діагоналі: " << doubleMax << endl;
+    sortRows(doubleMatrix);
+    cout << "Відсортована Double Матриця:" << endl;
+    printMatrix(doubleMatrix);
+    cout << endl;
+
+    vector<vector<char>> charMatrix = initializeMatrix<char>(size, ' ');
+    charMatrix[0] = {'c', 'a', 'b'};
+    charMatrix[1] = {'i', 'e', 'g'};
+    charMatrix[2] = {'f', 'h', 'd'};
+    cout << "Char Матриця:" << endl;
+    printMatrix(charMatrix);
+    auto [charMin, charMax] = findMinMaxDiagonal(charMatrix);
+    cout << "Min на діагоналі: " << charMin << ", Max на діагоналі: " << charMax << endl;
+    sortRows(charMatrix);
+    cout << "Відсортована Char Матриця:" << endl;
+    printMatrix(charMatrix);
+
+    return 0;
+}
