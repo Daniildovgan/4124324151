@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+string generateNumber() {
+    string number;
+    srand(time(0));
+    while (number.size() < 4) {
+        char digit = '0' + rand() % 10;
+        if (number.find(digit) == string::npos) {
+            number += digit;
+        }
+    }
+    return number;
+}
+
+pair<int, int> evaluateGuess(const string& secret, const string& guess) {
+    int bulls = 0, cows = 0;
+    for (int i = 0; i < 4; i++) {
+        if (guess[i] == secret[i]) {
+            bulls++;
+        } else if (secret.find(guess[i]) != string::npos) {
+            cows++;
+        }
+    }
+    return {bulls, cows};
+}
+
+void playGame(const string& secret, int attempts) {
+    string guess;
+    cout << "Введіть вашу здогадку: ";
+    cin >> guess;
+    if (guess == secret) {
+        cout << "Ви відгадали число " << secret << " за " << attempts + 1 << " спроб!" << endl;
+        return;
+    }
+
+    auto [bulls, cows] = evaluateGuess(secret, guess);
+    cout << "Бики: " << bulls << ", Корови: " << cows << endl;
+    playGame(secret, attempts + 1);
+}
+
+int main() {
+    string secret = generateNumber();
+    cout << "Гра \"Бики та корови\". Комп'ютер загадав чотирицифрове число." << endl;
+    playGame(secret, 0);
+    return 0;
+}
