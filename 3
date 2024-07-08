@@ -1,0 +1,25 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int binaryToDecimal(const string& binaryStr) {
+    int decimalValue = 0;
+    int length = binaryStr.length();
+
+    for (int i = 0; i < length; i++) {
+        if (binaryStr[length - 1 - i] == '1') {
+            decimalValue += pow(2, i);
+        }
+    }
+
+    return decimalValue;
+}
+
+int main() {
+    string binaryStr = "1011";
+    int decimalValue = binaryToDecimal(binaryStr);
+
+    cout << "Десяткове значення числа " << binaryStr << " = " << decimalValue << endl;
+
+    return 0;
+}
